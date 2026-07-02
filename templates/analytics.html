@@ -1,0 +1,252 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h2 class="mb-4">
+        📊 Academic Analytics
+    </h2>
+
+    <!-- Summary Cards -->
+    <div class="row mb-4">
+
+        <div class="col-md-6">
+
+            <div class="card shadow-sm text-center p-3">
+
+                <h5>Average Attendance</h5>
+
+                <h2 class="text-primary">
+                    {{ avg_attendance }}%
+                </h2>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-6">
+
+            <div class="card shadow-sm text-center p-3">
+
+                <h5>Average Grade Points</h5>
+
+                <h2 class="text-success">
+                    {{ avg_gpa }}
+                </h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-lg-6 mb-4">
+
+            <div class="card shadow">
+
+                <div class="card-body">
+
+                    <h4 class="mb-3">
+                        Attendance by Subject
+                    </h4>
+
+                    <canvas id="attendanceChart"></canvas>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-6 mb-4">
+
+            <div class="card shadow">
+
+                <div class="card-body">
+
+                    <h4 class="mb-3">
+                        GPA by Subject
+                    </h4>
+
+                    <canvas id="gpaChart"></canvas>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-lg-6 mb-4">
+
+            <div class="card shadow">
+
+                <div class="card-body">
+
+                    <h4 class="mb-3">
+                        Attendance Distribution
+                    </h4>
+
+                    <canvas id="pieChart"></canvas>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-6 mb-4">
+
+            <div class="card shadow">
+
+                <div class="card-body">
+
+                    <h4 class="mb-3">
+                        Academic Insights
+                    </h4>
+
+                    <ul class="list-group">
+
+                        {% if avg_attendance >= 90 %}
+                        <li class="list-group-item">
+                            ✅ Excellent attendance.
+                        </li>
+                        {% elif avg_attendance >= 75 %}
+                        <li class="list-group-item">
+                            👍 Good attendance.
+                        </li>
+                        {% else %}
+                        <li class="list-group-item">
+                            ⚠ Attendance needs improvement.
+                        </li>
+                        {% endif %}
+
+                        {% if avg_gpa >= 9 %}
+                        <li class="list-group-item">
+                            🏆 Outstanding academic performance.
+                        </li>
+                        {% elif avg_gpa >= 8 %}
+                        <li class="list-group-item">
+                            📘 Good performance. Aim for 9+.
+                        </li>
+                        {% else %}
+                        <li class="list-group-item">
+                            📚 Increase study time to improve grades.
+                        </li>
+                        {% endif %}
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+
+<script>
+
+new Chart(document.getElementById("attendanceChart"),{
+
+    type:"bar",
+
+    data:{
+
+        labels:{{ attendance_subjects|tojson }},
+
+        datasets:[{
+
+            label:"Attendance (%)",
+
+            data:{{ attendance_values|tojson }}
+
+        }]
+
+    },
+
+    options:{
+
+        responsive:true,
+
+        scales:{
+            y:{
+                beginAtZero:true,
+                max:100
+            }
+        }
+
+    }
+
+});
+
+
+new Chart(document.getElementById("gpaChart"),{
+
+    type:"line",
+
+    data:{
+
+        labels:{{ gpa_subjects|tojson }},
+
+        datasets:[{
+
+            label:"Grade Points",
+
+            data:{{ gpa_values|tojson }},
+
+            tension:0.4
+
+        }]
+
+    },
+
+    options:{
+
+        responsive:true,
+
+        scales:{
+            y:{
+                beginAtZero:true,
+                max:10
+            }
+        }
+
+    }
+
+});
+
+
+new Chart(document.getElementById("pieChart"),{
+
+    type:"pie",
+
+    data:{
+
+        labels:{{ attendance_subjects|tojson }},
+
+        datasets:[{
+
+            data:{{ attendance_values|tojson }}
+
+        }]
+
+    }
+
+});
+
+</script>
+
+{% endblock %}

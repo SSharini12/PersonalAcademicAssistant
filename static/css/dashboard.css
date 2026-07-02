@@ -1,0 +1,227 @@
+/* ===========================
+   Dashboard Styling
+=========================== */
+
+.dashboard-card{
+
+    border: none;
+
+    border-radius: 20px;
+
+    color: white;
+
+    overflow: hidden;
+
+    transition: all 0.35s ease;
+
+    box-shadow: 0 12px 30px rgba(0,0,0,0.10);
+
+}
+
+.dashboard-card:hover{
+
+    transform: translateY(-8px);
+
+    box-shadow: 0 18px 40px rgba(0,0,0,0.18);
+
+}
+
+/* ---------------------------
+   Individual Card Colors
+---------------------------- */
+
+.row .col-lg-3:nth-child(1) .dashboard-card{
+
+    background: linear-gradient(135deg,#4F46E5,#6366F1);
+
+}
+
+.row .col-lg-3:nth-child(2) .dashboard-card{
+
+    background: linear-gradient(135deg,#0EA5E9,#3B82F6);
+
+}
+
+.row .col-lg-3:nth-child(3) .dashboard-card{
+
+    background: linear-gradient(135deg,#10B981,#22C55E);
+
+}
+
+.row .col-lg-3:nth-child(4) .dashboard-card{
+
+    background: linear-gradient(135deg,#F59E0B,#FB923C);
+
+}
+
+/* ---------------------------
+   Card Body
+---------------------------- */
+
+.dashboard-card .card-body{
+
+    padding: 28px;
+
+    text-align: center;
+
+}
+
+.dashboard-card h5{
+
+    font-size: 1rem;
+
+    font-weight: 500;
+
+    opacity: .9;
+
+    margin-bottom: 15px;
+
+}
+
+.dashboard-card h2{
+
+    font-size: 2.4rem;
+
+    font-weight: 700;
+
+    margin-bottom: 0;
+
+}
+
+/* ---------------------------
+   Charts
+---------------------------- */
+
+.card{
+
+    border: none;
+
+    border-radius: 20px;
+
+    box-shadow: 0 12px 30px rgba(0,0,0,.08);
+
+}
+
+.card-body{
+
+    padding: 25px;
+
+}
+
+.card h4{
+
+    font-weight: 600;
+
+    color: #334155;
+
+}
+
+canvas{
+
+    max-height: 340px;
+
+}
+
+/* ---------------------------
+   Download Button
+---------------------------- */
+
+.btn-success{
+
+    border-radius: 12px;
+
+    padding: 10px 22px;
+
+    font-weight: 600;
+
+    transition: .3s;
+
+}
+
+.btn-success:hover{
+
+    transform: translateY(-2px);
+
+}
+
+/* ---------------------------
+   Welcome Heading
+---------------------------- */
+
+h2.mb-4{
+
+    font-weight: 700;
+
+    color: #1E293B;
+
+}
+
+/* ---------------------------
+   Responsive
+---------------------------- */
+
+@media(max-width:992px){
+
+    .dashboard-card{
+
+        margin-bottom: 20px;
+
+    }
+
+}
+
+@media(max-width:768px){
+
+    .dashboard-card h2{
+
+        font-size: 2rem;
+
+    }
+
+    .dashboard-card h5{
+
+        font-size: .95rem;
+
+    }
+
+}
+.health-card{
+
+    background: linear-gradient(135deg,#ef4444,#f59e0b);
+
+    color:white;
+
+}
+
+.health-card h2{
+
+    font-size:3rem;
+
+    font-weight:bold;
+
+}
+
+.health-card small{
+
+    opacity:0.9;
+
+    font-size:0.9rem;
+
+}
+.progress{
+
+height:12px;
+
+border-radius:20px;
+
+background:#E5E7EB;
+
+}
+
+.progress-bar{
+
+border-radius:20px;
+
+transition:width 1.5s ease;
+
+}

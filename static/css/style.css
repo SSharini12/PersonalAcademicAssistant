@@ -1,0 +1,75 @@
+/* Google Font */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #f4f7fb;
+    margin: 0;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 250px;
+    min-height: 100vh;
+    background: linear-gradient(180deg, #2563eb, #1e40af);
+    color: white;
+    position: fixed;
+    left: 0;
+    top: 0;
+    padding: 25px 15px;
+}
+
+.sidebar h2 {
+    text-align: center;
+    margin-bottom: 35px;
+    font-weight: bold;
+}
+
+.sidebar a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    padding: 12px 15px;
+    margin: 8px 0;
+    border-radius: 10px;
+    transition: 0.3s;
+}
+
+.sidebar a:hover {
+    background: rgba(255,255,255,0.15);
+}
+
+/* Main Content */
+.main-content {
+    margin-left: 250px;
+    padding: 30px;
+}
+
+/* Navbar */
+.topbar {
+    background: white;
+    border-radius: 15px;
+    padding: 18px 25px;
+    box-shadow: 0px 3px 12px rgba(0,0,0,.08);
+    margin-bottom: 30px;
+}
+
+/* Cards */
+.dashboard-card {
+    border: none;
+    border-radius: 18px;
+    box-shadow: 0px 5px 15px rgba(0,0,0,.08);
+    transition: .3s;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-5px);
+}
+
+.dashboard-card .card-body {
+    text-align: center;
+    padding: 30px;
+}
+
+.dashboard-card h2 {
+    color: #2563eb;
+    font-weight: bold;
+}

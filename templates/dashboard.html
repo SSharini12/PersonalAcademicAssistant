@@ -1,0 +1,486 @@
+{% extends "layout.html" %}
+
+{% block css %}
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='css/dashboard.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <!-- Welcome Card -->
+    <div class="card mb-4 shadow-sm">
+
+        <div class="card-body">
+
+            <h2 class="mb-2">
+                Welcome back, {{ current_user.name }} 👋
+            </h2>
+
+            <p class="text-muted mb-0">
+                Here's your academic progress today.
+            </p>
+
+        </div>
+
+    </div>
+
+    <!-- Download Report -->
+    <div class="mb-4">
+
+        <a href="{{ url_for('download_report') }}"
+           class="btn btn-success">
+
+            📄 Download Academic Report
+
+        </a>
+
+    </div>
+
+    <!-- Statistics Cards -->
+
+    <div class="row g-4">
+
+        <!-- Attendance -->
+
+        <div class="col-lg-3 col-md-6">
+
+            <div class="card dashboard-card shadow-sm">
+
+                <div class="card-body text-center">
+
+                    <h5>Attendance</h5>
+
+<h2>
+
+<span id="attendanceNumber">
+
+{{ overall_attendance }}
+
+</span>%
+
+</h2>
+
+<div class="progress mt-3">
+
+<div
+class="progress-bar bg-success"
+
+style="width: {{ overall_attendance }}%;">
+
+</div>
+
+</div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- GPA -->
+
+        <div class="col-lg-3 col-md-6">
+
+            <div class="card dashboard-card shadow-sm">
+
+                <div class="card-body text-center">
+
+                    <h5>Current GPA</h5>
+
+<h2 id="gpaNumber">
+
+{{ current_gpa }}
+
+</h2>
+
+<div class="progress mt-3">
+
+<div
+class="progress-bar bg-primary"
+
+style="width: {{ current_gpa*10 }}%;">
+
+</div>
+
+</div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Prediction -->
+
+        <div class="col-lg-3 col-md-6">
+
+            <div class="card dashboard-card shadow-sm">
+
+                <div class="card-body text-center">
+
+                    <h5>Latest Prediction</h5>
+
+                    {% if latest_prediction %}
+
+                        <h2 class="text-primary">
+
+                            {{ latest_prediction.predicted_gpa }}
+
+                        </h2>
+
+                    {% else %}
+
+                        <h5 class="text-muted">
+
+                            Predict Now
+
+                        </h5>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Subjects -->
+
+        <div class="col-lg-3 col-md-6">
+
+            <div class="card dashboard-card shadow-sm">
+
+                <div class="card-body text-center">
+
+                    <h5>Subjects</h5>
+
+                    <h2 id="subjectNumber">
+
+                        {{ total_subjects }}
+
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+    <div class="col-lg-3 col-md-6">
+
+    <div class="card dashboard-card shadow-sm health-card">
+
+        <div class="card-body text-center">
+
+            <h5>Academic Health</h5>
+
+            <h2 id="healthNumber">
+
+    {{ health_score }}
+
+    <small style="font-size:1rem;">/100</small>
+
+</h2>
+<div class="progress mt-3">
+
+<div
+class="progress-bar bg-warning"
+
+style="width: {{ health_score }}%;">
+
+</div>
+
+</div>
+<span class="badge bg-{{ health_color }} mt-2">
+
+    {{ health_status }}
+
+</span>
+
+<p class="mt-2 mb-0">
+
+    Overall Performance Score
+
+</p>
+
+        </div>
+
+    </div>
+
+    </div>
+    </div>
+
+    <!-- Charts -->
+
+    <div class="row mt-5">
+
+        <!-- Attendance Chart -->
+
+        <div class="col-lg-6 mb-4">
+
+            <div class="card shadow-sm">
+
+                <div class="card-body">
+
+                    <h4 class="mb-3">
+
+                        Attendance by Subject
+
+                    </h4>
+
+                    {% if attendance_subjects %}
+
+                        <canvas id="attendanceChart"></canvas>
+
+                    {% else %}
+
+                        <div class="text-center py-5">
+
+                            <h5>No Attendance Data</h5>
+
+                            <p class="text-muted">
+
+                                Add attendance records to view analytics.
+
+                            </p>
+
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- GPA Chart -->
+
+        <div class="col-lg-6 mb-4">
+
+            <div class="card shadow-sm">
+
+                <div class="card-body">
+
+                    <h4 class="mb-3">
+
+                        GPA by Subject
+
+                    </h4>
+
+                    {% if gpa_subjects %}
+
+                        <canvas id="gpaChart"></canvas>
+
+                    {% else %}
+
+                        <div class="text-center py-5">
+
+                            <h5>No GPA Data</h5>
+
+                            <p class="text-muted">
+
+                                Add GPA records to view analytics.
+
+                            </p>
+
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+
+
+{% block scripts %}
+
+<script>
+
+const attendanceCtx = document.getElementById("attendanceChart");
+
+if (attendanceCtx){
+
+new Chart(attendanceCtx,{
+
+type:"doughnut",
+
+data:{
+
+labels: {{ attendance_subjects|tojson }},
+
+datasets:[{
+
+label:"Attendance (%)",
+
+data: {{ attendance_values|tojson }},
+
+backgroundColor:[
+
+"#6366F1",
+
+"#10B981",
+
+"#F59E0B",
+
+"#EF4444",
+
+"#06B6D4",
+
+"#8B5CF6",
+
+"#EC4899",
+
+"#14B8A6"
+
+],
+
+borderWidth:2,
+
+hoverOffset:12
+
+}]
+
+},
+
+options:{
+
+responsive:true,
+
+animation:{
+
+duration:1800
+
+}
+
+}
+
+});
+
+}
+
+
+
+const gpaCtx = document.getElementById("gpaChart");
+
+if (gpaCtx){
+
+new Chart(gpaCtx,{
+
+type:"line",
+
+data:{
+
+labels: {{ gpa_subjects|tojson }},
+
+datasets:[{
+
+label:"Grade Points",
+
+data: {{ gpa_values|tojson }},
+
+borderColor:"#4F46E5",
+
+backgroundColor:"rgba(79,70,229,0.15)",
+
+fill:true,
+
+tension:0.4,
+
+pointRadius:5,
+
+pointHoverRadius:8
+
+}]
+
+},
+
+options:{
+
+responsive:true,
+
+animation:{
+
+duration:1800
+
+},
+
+scales:{
+
+y:{
+
+beginAtZero:true,
+
+max:10
+
+}
+
+}
+
+}
+
+});
+
+}
+
+
+
+// Animated Numbers
+
+const attendanceCounter = new CountUp(
+
+"attendanceNumber",
+
+{{ overall_attendance }}
+
+);
+
+if(!attendanceCounter.error){
+
+attendanceCounter.start();
+
+}
+
+
+const gpaCounter = new CountUp(
+
+"gpaNumber",
+
+{{ current_gpa }}
+
+);
+
+if(!gpaCounter.error){
+
+gpaCounter.start();
+
+}
+
+
+const subjectCounter = new CountUp(
+
+"subjectNumber",
+
+{{ total_subjects }}
+
+);
+subjectCounter.start();
+if(!subjectCounter.error){
+
+subjectCounter.start();
+
+}
+
+</script>
+
+{% endblock %}

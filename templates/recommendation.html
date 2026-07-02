@@ -1,0 +1,93 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h2 class="mb-4">
+        📚 Personalized Study Recommendations
+    </h2>
+
+    <div class="row mb-4">
+
+        <div class="col-md-4">
+
+            <div class="card shadow-sm text-center p-3">
+
+                <h5>Attendance</h5>
+
+                <h2>{{ attendance }}%</h2>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="card shadow-sm text-center p-3">
+
+                <h5>Current GPA</h5>
+
+                <h2>{{ current_gpa }}</h2>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="card shadow-sm text-center p-3">
+
+                <h5>Predicted GPA</h5>
+
+                <h2>
+
+                {% if latest_prediction %}
+                    {{ latest_prediction.predicted_gpa }}
+                {% else %}
+                    --
+                {% endif %}
+
+                </h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="card shadow">
+
+        <div class="card-body">
+
+            <h4 class="mb-3">
+                💡 AI Suggestions
+            </h4>
+
+            {% if recommendations %}
+
+                <ul class="list-group list-group-flush">
+
+                    {% for item in recommendations %}
+
+                    <li class="list-group-item">
+                        {{ item }}
+                    </li>
+
+                    {% endfor %}
+
+                </ul>
+
+            {% else %}
+
+                <p>No recommendations available.</p>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

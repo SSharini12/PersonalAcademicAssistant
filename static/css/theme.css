@@ -1,0 +1,164 @@
+body{
+
+    margin:0;
+
+    background:linear-gradient(
+        135deg,
+        #4F46E5,
+        #06B6D4
+    );
+
+    min-height:100vh;
+
+    font-family:"Segoe UI",sans-serif;
+
+}
+.login-page{
+
+    min-height:100vh;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+}
+.sidebar{
+
+    width:260px;
+
+    min-height:100vh;
+
+    background:#1E293B;
+
+    color:white;
+
+    position:fixed;
+
+    left:0;
+
+    top:0;
+
+    padding:25px;
+
+}
+
+.logo{
+
+    text-align:center;
+
+    margin-bottom:40px;
+
+    font-weight:700;
+
+}
+
+.sidebar a{
+
+    display:block;
+
+    color:#CBD5E1;
+
+    text-decoration:none;
+
+    padding:14px 18px;
+
+    margin-bottom:8px;
+
+    border-radius:12px;
+
+    transition:.3s;
+
+    font-size:16px;
+
+}
+
+.sidebar a i{
+
+    margin-right:10px;
+
+}
+
+.sidebar a:hover{
+
+    background:#334155;
+
+    color:white;
+
+    transform:translateX(5px);
+
+}
+
+.content{
+
+    margin-left:260px;
+
+    width:100%;
+
+    padding:35px;
+
+}
+
+.alert{
+
+    border-radius:12px;
+
+}
+
+.card{
+
+    border:none;
+
+    border-radius:18px;
+
+}
+
+@media(max-width:992px){
+
+    .sidebar{
+
+        width:80px;
+
+    }
+
+    .sidebar .logo{
+
+        font-size:18px;
+
+    }
+
+    .sidebar a{
+
+        text-align:center;
+
+        font-size:0;
+
+    }
+
+    .sidebar a i{
+
+        font-size:22px;
+
+        margin:0;
+
+    }
+
+    .content{
+
+        margin-left:80px;
+
+    }
+    .sidebar a.active{
+
+    background:#4F46E5;
+
+    color:white;
+
+    font-weight:600;
+
+    box-shadow:0 5px 20px rgba(79,70,229,.4);
+
+}
+
+}
